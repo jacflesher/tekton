@@ -1,0 +1,33 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sample-cron-job
+  namespace: tekton-pipelines
+spec:
+  schedule: "*/1 * * * *" # Runs every 1 minutes
+  concurrencyPolicy: Forbid
+  suspend: false
+  jobTemplate:
+    metadata:
+      namespace: tekton-pipelines
+    spec:
+      template:
+        spec:
+          serviceAccountName: cronjob-sa
+          containers:
+          - name: trigger
+            image: docker.io/jacflesher/ubi9:v0.1
+            imagePullPolicy: Always
+            command: ["tkn"]
+            args: ["pipeline", "start", "sample-pipeline", "-n", "tekton-pipelines", "--serviceaccount", "cronjob-sa"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              capabilities:
+                drop:
+                  - "ALL"
+              seccompProfile:
+                type: RuntimeDefault
+              runAsUser: 1000
+          restartPolicy: OnFailure

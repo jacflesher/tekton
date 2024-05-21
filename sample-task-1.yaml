@@ -1,0 +1,23 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: sample-task-1
+  namespace: tekton-pipelines
+spec:
+  steps:
+  - name: task-1
+    image: docker.io/jacflesher/ubi9:v0.1
+    env:
+    - name: SAMPLE_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: "sample-secret"
+          key: "sample-secret"
+    - name: SAMPLE_ENV_VAR
+      value: "this-is-a-sample-environment-variable from task1!"
+    script: |
+      #!/bin/bash
+      echo "hello, world! from task1"
+      echo "SAMPLE_SECRET: ${SAMPLE_SECRET}"
+      echo "SAMPLE_ENV_VAR: ${SAMPLE_ENV_VAR}"
