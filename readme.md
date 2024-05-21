@@ -13,6 +13,11 @@
     kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
     ```
 
+1. Switch to new tekton namespace created in previous step
+    ```
+    kubectl config set-context "minikube" --namespace "tekton-pipelines"
+    ```
+
 1. Create free account at https://docker.io
 
 1. Log into podman using docker.io account
@@ -24,7 +29,7 @@
     ```
     podman build -t docker.io/<your-repository>/ubi9:v0.1 .
     ```
-    or, you can use my image, its public. In that case, you can skip this step.
+    *(or, you can use my image, its public. In that case, you can skip this step.)*
 
 1. Start minikube
     ```
@@ -74,10 +79,11 @@
 
 1. Watch your pipeline run!
     ```
-    kubectl get jobs --namespace tekton-pipelines
+    kubectl get jobs
     ```
 
 1. View logs
     ```
-    kubectl logs job/JOB-NAME --namespace tekton-pipelines
+    kubectl get pods
+    kubectl logs pod/<POD-NAME>
     ```
