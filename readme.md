@@ -18,7 +18,7 @@
     kubectl config set-context "minikube" --namespace "tekton-pipelines"
     ```
 
-1. Create free account at https://docker.io
+1. Create free account at https://docker.io. If you already have an account, skip to next step.
 
 1. Log into podman using docker.io account
     ```
