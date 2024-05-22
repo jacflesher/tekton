@@ -2,11 +2,28 @@
 
 1. Install [podman](https://podman.io/docs/installation)
 
-1. Install [qemu](https://www.qemu.org/download)
-
 1. Install [kubectl](https://kubernetes.io/docs/tasks/tools)
 
+1. Install [tkn](https://github.com/tektoncd/cli/blob/main/releases.md)
+
 1. Install [minikube](https://minikube.sigs.k8s.io/docs/start/) (for local testing)
+
+1. If using Windows, start command-prompt as Administrator
+
+1. Create podman VM
+    ```
+    podman machine init
+    ```
+
+1. Start podman VM
+    ```
+    podman machine start
+    ```
+
+1. Start minikube local kubernetes cluster
+    ```
+    minikube start --driver "podman"
+    ```
 
 1. Install [tekton](https://tekton.dev/docs/installation/pipelines)
     ```
@@ -23,17 +40,6 @@
 1. Log into podman using docker.io account
     ```
     podman login docker.io
-    ```
-
-1. Build new image using the Dockerfile (the dot at the end means 'THIS DIRECTORY' so it know where to look for it if you run the command in the same place.  If not running the command in the same folder, make sure to change the .(dot) to a full path to the directory holding the "Dockerfile").  Update image reference in cronjob.yaml, and both sample-task yaml files
-    ```
-    podman build -t docker.io/<your-repository>/ubi9:v0.1 .
-    ```
-    *(or, you can use my image, its public. In that case, you can skip this step.)*
-
-1. Start minikube
-    ```
-    minikube start --driver "qemu"
     ```
 
 1. Enable minikube ingress
@@ -85,5 +91,5 @@
 1. View logs
     ```
     kubectl get pods
-    kubectl logs pod/<POD-NAME>
+    kubectl describe pod/<POD-NAME>
     ```

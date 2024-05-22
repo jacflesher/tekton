@@ -6,8 +6,17 @@ metadata:
   namespace: tekton-pipelines
 spec:
   steps:
-  - name: task-1
+  - name: step-1
     image: docker.io/jacflesher/ubi9:v0.1
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 1000
+      runAsNonRoot: true
+      capabilities:
+        drop:
+          - "ALL"
+      seccompProfile:
+        type: RuntimeDefault
     env:
     - name: SAMPLE_SECRET
       valueFrom:
