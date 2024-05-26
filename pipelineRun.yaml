@@ -12,7 +12,7 @@ spec:
       runAsNonRoot: true
       fsGroup: 1000
     containers:
-    - name: "*"
+    - name: step-1
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:
