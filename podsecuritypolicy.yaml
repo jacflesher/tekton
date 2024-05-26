@@ -2,6 +2,7 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: relaxed-psp
+  namespace: tekton-pipelines
 spec:
   allowPrivilegeEscalation: true
   allowedCapabilities:
