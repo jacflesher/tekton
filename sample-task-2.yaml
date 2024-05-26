@@ -6,27 +6,27 @@ metadata:
   namespace: tekton-pipelines
 spec:
   steps:
-  - name: step-1
-    image: docker.io/jacflesher/ubi9:v0.1
-    securityContext:
-      allowPrivilegeEscalation: false
-      runAsUser: 1000
-      runAsNonRoot: true
-      capabilities:
-        drop:
-          - "ALL"
-      seccompProfile:
-        type: RuntimeDefault
-    env:
-    - name: SAMPLE_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: "sample-secret"
-          key: "sample-secret"
-    - name: SAMPLE_ENV_VAR
-      value: "this-is-a-sample-environment-variable from task2!"
-    script: |
-      #!/bin/bash
-      echo "hello, world! from task2"
-      echo "SAMPLE_SECRET: ${SAMPLE_SECRET}"
-      echo "SAMPLE_ENV_VAR: ${SAMPLE_ENV_VAR}"
+    - name: step-1
+      image: docker.io/jacflesher/ubi9:v0.1
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsUser: 1000
+        runAsNonRoot: true
+        capabilities:
+          drop:
+            - "ALL"
+        seccompProfile:
+          type: RuntimeDefault
+      env:
+        - name: SAMPLE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: "sample-secret"
+              key: "sample-secret"
+        - name: SAMPLE_ENV_VAR
+          value: "this-is-a-sample-environment-variable from task2!"
+      script: |
+        #!/bin/bash
+        echo "hello, world! from task2"
+        echo "SAMPLE_SECRET: ${SAMPLE_SECRET}"
+        echo "SAMPLE_ENV_VAR: ${SAMPLE_ENV_VAR}"

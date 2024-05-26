@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: sample-pipeline
+  namespace: tekton-pipelines
+spec:
+  tasks:
+    - name: sample-task-1
+      taskRef:
+        name: sample-task-1
+    - name: sample-task-2
+      taskRef:
+        name: sample-task-2
+      runAfter:
+        - sample-task-1

@@ -22,6 +22,11 @@
     sudo apt install -y git ssh net-tools dnsutils vim curl podman jq yq
     ```
 
+1. Install brew
+    ```bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```
+
 1. From inside you WSL VM, install DistroD.  This is required for K3S to run later since it need systemd to work.  This step is not required unless using WSL for local testing
 
     * Curl to download the install script
