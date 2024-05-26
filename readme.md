@@ -128,6 +128,11 @@
     *         default   default   default    tekton-pipelines
     ```
 
+1. Relax security on the namespace by apply our namespace.yaml file with the privileged annotations
+    ```
+    kubectl apply -f namespace.yaml
+    ```
+
 1. Setup secrets and role based permissions
     ```
     kubectl apply -f secret.yaml
@@ -148,7 +153,38 @@
     kubectl apply -f cronjob.yaml
     ```
 
+    * At this point, if the pipeline is running successfully it will be running every one minute
+        ```
+        kubectl get jobs #list cronjobs
+        kubectl get pods #list pods
+        kubectl log pod/<pod name> #get logs from running pod
+        ```
+
 1. (Optional) Install tekton cli binary [tkn](https://github.com/tektoncd/cli/blob/main/releases.md), for pipeline specific tasks like watching it run
     ```bash
     curl -L "https://github.com/tektoncd/cli/releases/download/v0.37.0/tektoncd-cli-0.37.0_Linux-64bit.deb" --output "tkn.deb" && sudo dpkg -i "tkn.deb"
     ```
+
+    * Then you can run pipelines and check logs using tkn commands
+        ```
+        $ tkn pipeline list
+        NAME              AGE             LAST RUN                    STARTED          DURATION   STATUS
+        sample-pipeline   7 minutes ago   sample-pipeline-run-8kljq   54 seconds ago   13s        Succeeded
+        ```
+        ```
+        $ tkn pipeline start sample-pipeline
+        PipelineRun started: sample-pipeline-run-6kr4f
+
+        In order to track the PipelineRun progress run:
+        tkn pipelinerun logs sample-pipeline-run-6kr4f -f -n tekton-pipelines
+        ```
+        ```
+        $ tkn pipelinerun logs sample-pipeline-run-6kr4f -f -n tekton-pipelines
+        [sample-task-1 : step-1] hello, world! from task1
+        [sample-task-1 : step-1] SAMPLE_SECRET: this is a super secret sentence
+        [sample-task-1 : step-1] SAMPLE_ENV_VAR: this-is-a-sample-environment-variable from task1!
+
+        [sample-task-2 : step-1] hello, world! from task2
+        [sample-task-2 : step-1] SAMPLE_SECRET: this is a super secret sentence
+        [sample-task-2 : step-1] SAMPLE_ENV_VAR: this-is-a-sample-environment-variable from task2!
+        ```
