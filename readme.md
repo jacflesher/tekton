@@ -1,19 +1,26 @@
 
-### Set up `wsl`
+### Set up Windows Sub-system Linux (WSL) 
 
-1. Install
+1. This comes already installed into all Windows operating systems. Nothing to download. Yay!
+
+1. To see a full list of available Linux distribution, you can do
+    ```
+    wsl --list
+    ```
+
+1. We will be using "Debian".  But we don't want it to start up yet so we will include "--no-launch" parameter:
     ```
     wsl --install --distribution debian --no-launch
     ```
 
-1. Set to use version 2 explicitly
+1. Set to use version 2 explicitly, which is why couldn't start it yet
     ```
     wsl --set-default-version 2
     ```
 
-1. Log into VM
+1. Now we can start it, which will prompt you to login using whatever credentials you set up (not necessarily the same as you windows credentials, unless you made it that way)
     ```
-    wsl --distribution Debian
+    wsl --distribution debian
     ```
 
 1. Install common packages that you will need
